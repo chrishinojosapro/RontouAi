@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Custom AI Chat</title>
+  <style>
+    body { font-family: sans-serif; background: #111; color: #eee; padding: 20px; }
+    #response { margin-top: 20px; white-space: pre-wrap; }
+    input, button { font-size: 16px; padding: 10px; width: 100%; margin-top: 10px; }
+  </style>
+</head>
+<body>
+  <h2>Ask the AI Anything</h2>
+  <input id="question" placeholder="Type your question..." />
+  <button onclick="send()">Send</button>
+  <pre id="response"></pre>
+
+  <script>
+    async function send() {
+      const question = document.getElementById("question").value;
+      const result = await fetch("https://api.github.com/repos/YOUR_USERNAME/YOUR_REPO/dispatches", {
+        method: "POST",
+        headers: {
+          "Authorization": "Bearer YOUR_PAT_TOKEN",
+          "Accept": "application/vnd.github.everest-preview+json"
+        },
+        body: JSON.stringify({
+          event_type: "ask-chat",
+          client_payload: { message: question }
+        })
+      });
+      document.getElementById("response").innerText = "Message sent! Check GitHub Actions.";
+    }
+  </script>
+</body>
+</html>
