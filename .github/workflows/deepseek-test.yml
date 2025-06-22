@@ -1,0 +1,23 @@
+name: DeepSeek API Test
+
+on:
+  workflow_dispatch:
+
+jobs:
+  call-deepseek:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Call DeepSeek Chat API
+        run: |
+          echo "Calling DeepSeek..."
+          curl -s https://api.deepseek.com/v1/chat/completions \
+            -H "Authorization: Bearer ${{ secrets.DEEPSEEK_API_KEY }}" \
+            -H "Content-Type: application/json" \
+            -d '{
+              "model": "deepseek-chat",
+              "messages": [
+                { "role": "system", "content": "You are a helpful assistant." },
+                { "role": "user", "content": "What is the capital of France?" }
+              ]
+            }'
