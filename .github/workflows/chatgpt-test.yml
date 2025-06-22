@@ -1,0 +1,23 @@
+name: ChatGPT API Test
+
+on:
+  workflow_dispatch:  # lets you run this manually
+
+jobs:
+  call-chatgpt:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Make API call to ChatGPT
+        run: |
+          echo "Calling OpenAI ChatGPT API..."
+          curl -s https://api.openai.com/v1/chat/completions \
+            -H "Authorization: Bearer ${{ secrets.OPENAI_API_KEY }}" \
+            -H "Content-Type: application/json" \
+            -d '{
+              "model": "gpt-3.5-turbo",
+              "messages": [
+                { "role": "system", "content": "You are a helpful assistant." },
+                { "role": "user", "content": "What is the capital of France?" }
+              ]
+            }'
